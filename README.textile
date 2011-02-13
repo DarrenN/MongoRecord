@@ -1,4 +1,4 @@
-h1. MongoRecord
+h1. MongoRecord - PHP 5.3 Namespaced & Autoloaded Version
 
 MongoRecord is a PHP Mongo ORM layer built on top of the PHP "Mongo PECL extension":http://pecl.php.net/package/mongo 
 
@@ -19,7 +19,24 @@ h2. Requirements
 
 h2. Installation
 
-Extract the source files into a directory in your PHP library path.
+Extract the source files into a directory in your PHP library path. Use SplClassAutloader.php to load classes using their namespaces:
+
+pre..
+$libDir = __DIR__ . '/lib';
+$modelDir = __DIR__;
+//require $libDir . '/MongoRecord/BaseMongoRecord.php';
+
+require $libDir . '/SplClassLoader.php';
+
+use MongoRecord\BaseMongoRecord,
+    Models;
+
+$classLoader = new SplClassLoader('MongoRecord', $libDir);
+$classLoader->register();
+
+$classLoader = new SplClassLoader('Models', $modelDir);
+$classLoader->register();
+p.
 
 h2. Usage
 
