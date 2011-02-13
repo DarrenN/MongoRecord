@@ -199,8 +199,10 @@ abstract class BaseMongoRecord
     /**
      * Remove any namespacing from Class Name
      */
+
     if (stripos($className, "\\") !== false) {
-      $className = array_pop(explode("\\", $className));
+      $className = explode("\\", $className);
+      $className = array_pop($className);
     };
 
     $inflector = Inflector::getInstance();
