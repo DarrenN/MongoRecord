@@ -43,10 +43,12 @@ h2. Usage
 
 h3. Basic
 
-Using MongoRecord is as simple as declaring classes that are extensions of the base ORM class.
+Using MongoRecord is as simple as declaring classes that are extensions of the base ORM class. Models are currently in the @Models@ directory but this can be changed accordingly in the autoloader.
 
 pre.. 
-class Person extends BaseMongoRecord
+namespace Models;
+
+class Person extends \MongoRecord\BaseMongoRecord
 {
 }
 
@@ -68,10 +70,10 @@ h3. Creating and Fetching
 New records can be created by instantiating and saving:
 
 pre.. 
-$person = new Person();
+$person = new Models\Person();
 $person->save(); // true or false depending on success
 
-$person = Person::findOne();
+$person = Models\Person::findOne();
 $person->destroy();
 
 p. 
@@ -79,18 +81,18 @@ You can also add options to how you want to find.
 
 pre.. 
 // find the first Person sorted by name, starting from the tenth
-Person::find(array(), array('sort' => array('name' => 1), 'offset' => 10, 'limit' => 1));
+Models\Person::find(array(), array('sort' => array('name' => 1), 'offset' => 10, 'limit' => 1));
 
 h3. Attributes
 
 Attributes can be set in bulk on the constructor, one-by-one, or chained.
 
 pre.. 
-$person = new Person(array('name' => 'Bob', 'description' => 'foobar'));
+$person = new Models\Person(array('name' => 'Bob', 'description' => 'foobar'));
 $person->setAge(25)->setGender("Male");
 $person->save(); // returns true or false
 
-Person::find(array('name' => 'Bob', 'gender' => 'Male')); // finds all male Bobs in the people collection.
+Models\Person::find(array('name' => 'Bob', 'gender' => 'Male')); // finds all male Bobs in the people collection.
 
 h3. Validations
 
@@ -98,7 +100,7 @@ Validations can be added based on the name of the attribute
 
 pre.. 
 
-class Person extends BaseMongoRecord
+class Person extends \MongoRecord\BaseMongoRecord
 {
     public function validatesName($name)
     {
@@ -109,7 +111,7 @@ class Person extends BaseMongoRecord
     }
 }
 
-$person = new Person();
+$person = new Models\Person();
 $person->setName("Bob");
 $person->save(); // fails!
 
@@ -129,7 +131,7 @@ In a new, save, destroy cycle, the validations are called in the following order
 @afterNew -> beforeValidation -> afterValidation -> beforeSave -> afterSave -> beforeDestroy@
 
 pre.. 
-class Person extends BaseMongoRecord
+class Person extends \MongoRecord\BaseMongoRecord
 {
     public function beforeSave()
     {
@@ -138,3 +140,4 @@ class Person extends BaseMongoRecord
     }
 }
 
+p.
