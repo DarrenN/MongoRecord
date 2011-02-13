@@ -21,7 +21,7 @@ h2. Installation
 
 Extract the source files into a directory in your PHP library path. Use SplClassAutloader.php to load classes using their namespaces:
 
-pre..
+pre.. 
 $libDir = __DIR__ . '/lib';
 $modelDir = __DIR__;
 //require $libDir . '/MongoRecord/BaseMongoRecord.php';
@@ -36,7 +36,8 @@ $classLoader->register();
 
 $classLoader = new SplClassLoader('Models', $modelDir);
 $classLoader->register();
-p.
+
+p. 
 
 h2. Usage
 
