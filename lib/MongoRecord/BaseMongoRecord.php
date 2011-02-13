@@ -194,16 +194,7 @@ abstract class BaseMongoRecord
   // core conventions
   protected static function getCollection()
   {
-    $className = get_called_class();
-
-    /**
-     * Remove any namespacing from Class Name
-     */
-
-    if (stripos($className, "\\") !== false) {
-      $className = explode("\\", $className);
-      $className = array_pop($className);
-    };
+    $className = self::cleanClassName(get_called_class());
 
     $inflector = Inflector::getInstance();
     $collection_name = $inflector->tableize($className);
@@ -219,5 +210,16 @@ abstract class BaseMongoRecord
 
     return self::$connection->selectCollection(self::$database, $collection_name);
   }
-}
 
+  /**
+   * Remove any namespacing from Class Name
+   */
+  protected static function cleanClassName($className)
+  {
+    if (stripos($className, "\\") !== false) {
+      $className = explode("\\", $className);
+      return array_pop($className);
+    };
+    return $className;
+  }
+}
